@@ -1,27 +1,30 @@
 
-import { Card } from './Card'
-import {data} from './data'
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
+import { HomeScreen } from './screens/HomeScreen';
+import {ProductScreen} from './screens/ProductScreen'
+
 
 function App() {
-  return <div className="grid-container">
+    return <Router>
+      <div className="grid-container">
             <header className="row">
-                <div>
-                    <a className="brand" href="/">Ecommerce Lab</a>
+                <div className="brand">
+                    <Link to="/">Ecommerce Lab</Link>
                 </div>
                 <div>
-                    <a href="/cart">Cart</a>
-                    <a href="/signin">Sign in</a>
+                    <Link to="/cart">Cart</Link>
+                    <Link to="/signin">Sign in</Link>
                 </div>
             </header>
             <main>
-                <div className="row center ">
-                    {data.products.map((p)=> <Card _id={parseInt(p._id)} image={p.image} name={p.name} price={p.price} />)}
-                </div>
+                <Route path="/product/:id" component={ProductScreen}/>
+                <Route path="/" component={HomeScreen} exact/>
             </main>
-            <footer className="row center">
+            <footer className="row center"> 
                 All right reserved
             </footer>
-          </div>
+        </div>
+        </Router>
 }
 
 export default App;
