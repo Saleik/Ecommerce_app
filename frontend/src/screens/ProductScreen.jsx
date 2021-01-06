@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Rating } from '../components/Rating'
-import { data } from '../data'
+import { data } from '../../../backend/data'
 
 export const ProductScreen = props => {
 
