@@ -13,7 +13,7 @@ export const HomeScreen = () => {
     useEffect(() => {
         dispatch(listProducts())
     }, [dispatch])
-    console.log(products)
+    
     return <>
         {loading ? (<LoadingBox />)
             :
