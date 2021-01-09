@@ -74,7 +74,11 @@ ul {
 li {
   margin-top: 1rem;
 }
-input, select, textarea, button {
+
+input,
+select,
+textarea,
+button {
   padding: 1rem;
   border-radius: .5rem;
   border: .1rem #a4a4a4 solid;
@@ -84,15 +88,18 @@ input, select, textarea, button {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- 
+
 }
 
-button{
+button {
   background-color: #f8f8f8;
   cursor: pointer;
 }
 
-input:hover, select:hover, textarea:hover, button:hover {
+input:hover,
+select:hover,
+textarea:hover,
+button:hover {
   border: .1rem #404040 solid;
 }
 
@@ -111,7 +118,7 @@ button.block {
   font-weight: bold;
 }
 
-.badge{
+.badge {
   background-color: #f02020;
   color: #ffff;
   border-radius: 50%;
@@ -147,9 +154,18 @@ header a {
   flex: 2 1 50rem;
 }
 
+.min-30 {
+  min-width: 30rem;
+}
+
 /* image */
 img {
   border-radius: .5rem;
+}
+
+.small {
+  max-width: 5rem;
+  width: 100%
 }
 
 .medium {
