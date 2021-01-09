@@ -22,7 +22,6 @@ export const ProductScreen = props => {
         props.history.push(`/cart/${productId}?quantity=${quantity}`)
     }
 
-    console.log(props)
     return <>
         {loading ? (<LoadingBox />)
             :
