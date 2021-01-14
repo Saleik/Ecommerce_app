@@ -8,6 +8,7 @@ export const PaymentMethodScreen = props => {
     const cart = useSelector(state => state.cart)
     const { shippingAddress } = cart
 
+    //FIXME:Redirect user when is disconnected to shipping screen
     let history = useHistory()
     if (!shippingAddress.address) {
         history.push('/shipping')

@@ -21,7 +21,7 @@ export const ShippingAddressScreen = props => {
     const [postalCode, setPostalCode] = useState('')
     const [country, setCountry] = useState('')
 
-    const shippingRef = useCallback(() => {
+    const shippingAddressRef = useCallback(() => {
         if (shippingAddress.address) {
             setFullName(shippingAddress.fullName)
             setAddress(shippingAddress.address)
@@ -43,7 +43,7 @@ export const ShippingAddressScreen = props => {
         <div>
             <CheckoutSteps step1 step2></CheckoutSteps>
         </div>
-        <form ref={shippingRef} className="form" onSubmit={submitHandler}>
+        <form ref={shippingAddressRef} className="form" onSubmit={submitHandler}>
             <div>
                 <h1>Shipping</h1>
             </div>

@@ -1,27 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { createOrder } from '../actions/orderAction'
 import { CheckoutSteps } from '../components/CheckoutSteps'
+import { ORDER_CREATE_RESET } from '../constants/orderConstants'
+import { LoadingBox } from '../components/LoadingBox'
+import { MessageBox } from '../components/MessageBox'
 
-export const PlaceorderScreen = props => {
-
+export const PlaceOrderScreen = props => {
     const cart = useSelector(state => state.cart)
-
+    //FIXME:Redirect user when is disconnected to payment screen
     if (!cart.paymentMethod) {
         props.history.push('/payment')
     }
 
+    const orderCreate = useSelector(state => state.orderCreate)
+    const { error, success, loading, order } = orderCreate
     const toPrice = (num) => parseFloat(num.toFixed(2))
 
     cart.itemsPrice = toPrice(cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0))
     cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10)
     cart.taxPrice = toPrice(cart.itemsPrice * 20 / 100)
     cart.totalPrice = cart.itemsPrice + cart.shippingPrice
-
+    const history = useHistory()
     const dispatch = useDispatch()
     const placeOrderHandler = () => {
-        //TODO: dispatch place order action
+        dispatch(createOrder({ ...cart, orderItems: cart.cartItems }))
     }
+
+    useEffect(() => {
+        if (success) {
+            history.push(`/order/${order._id}`)
+            dispatch({ type: ORDER_CREATE_RESET })
+        }
+    }, [dispatch, success, order, history])
+
     return (
         <div>
             <CheckoutSteps step1 step2 step3 step4 />
@@ -97,8 +110,10 @@ export const PlaceorderScreen = props => {
                                 </div>
                             </li>
                             <li>
-                                <button className="primary block" onClick={placeOrderHandler} disabled={cart.cartItems.length === 0}>Place Order</button>
+                                <button className="primary block" onClick={placeOrderHandler} disabled={cart.cartItems.length === 0 || loading}>Place Order</button>
                             </li>
+                            {loading && <LoadingBox />}
+                            {error && <MessageBox variant="danger">{error}</MessageBox>}
                         </ul>
                     </div>
                 </div>
