@@ -111,6 +111,10 @@ button.block {
   width: 100%;
 }
 
+button.small {
+  font-size: 1.2rem;
+}
+
 /* header */
 .brand a {
   color: #ffff;
@@ -163,7 +167,7 @@ img {
   border-radius: .5rem;
 }
 
-.small {
+img.small {
   max-width: 5rem;
   width: 100%
 }
@@ -294,4 +298,26 @@ img.large {
 .checkout-steps>div.active {
   border-color: #f08000;
   color: #f08000;
+}
+
+/*Table*/
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background-color: #f4f4f4;
+}
+
+.table td,
+.table th {
+  text-align: left;
+  border: .1rem solid #f4f4f4;
+  padding: .5rem;
+}
+
+.table button {
+  margin: 0 .2rem;
 }

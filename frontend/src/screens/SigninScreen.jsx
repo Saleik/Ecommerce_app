@@ -48,7 +48,7 @@ export const SigninScreen = props => {
             <div>
                 <label />
                 <div>
-                    New customer? {' '} <Link to={`/signin?redirect=${redirect}`}> Create your account</Link>
+                    New customer? {' '} <Link to={`/register?redirect=${redirect}`}> Create your account</Link>
                 </div>
             </div>
         </form>
