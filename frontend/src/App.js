@@ -12,6 +12,8 @@ import { PaymentMethodScreen } from './screens/PaymentMethodScreen';
 import { PlaceOrderScreen } from './screens/PlaceOrderScreen';
 import { OrderScreen } from './screens/OrderScreen';
 import { OrderHistoryScreen } from './screens/OrderHistoryScreen';
+import { ProfileScreen } from './screens/ProfileScreen';
+import { PrivateRoute } from './components/PrivateRoute';
 
 
 function App() {
@@ -41,7 +43,7 @@ function App() {
                             <Link to="#">{userInfo.name} <i className="fa fa-caret-down"></i>{' '}</Link>
                                 <ul className="dropdown-content">
                                     <li>
-                                        <Link to="/profile">Profile</Link>
+                                        <Link to="/profile">User Profile</Link>
                                     </li>
                                     <li>
                                         <Link to="/orderhistory">Order History</Link>
@@ -60,11 +62,12 @@ function App() {
                 <Route path="/product/:id" component={ProductScreen} />
                 <Route path="/signin" component={SigninScreen} />
                 <Route path="/register" component={RegisterScreen} />
-                <Route path="/shipping" component={ShippingAddressScreen}/>
-                <Route path="/payment" component={PaymentMethodScreen} />
-                <Route path="/placeorder" component={PlaceOrderScreen} />
-                <Route path="/order/:id" component={OrderScreen} />
-                <Route path="/orderhistory" component={OrderHistoryScreen}/>
+                <PrivateRoute path="/shipping" component={ShippingAddressScreen}/>
+                <PrivateRoute path="/payment" component={PaymentMethodScreen} />
+                <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
+                <PrivateRoute path="/order/:id" component={OrderScreen} />
+                <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}/>
+                <PrivateRoute path="/profile" component={ProfileScreen} />
                 <Route path="/" component={HomeScreen} exact/>
             </main>
             <footer className="row center"> 

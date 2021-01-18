@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { savePaymentMethod } from '../actions/cartAction'
 import { CheckoutSteps } from '../components/CheckoutSteps'
 
-export const PaymentMethodScreen = props => {
+export const PaymentMethodScreen = () => {
     const cart = useSelector(state => state.cart)
     const { shippingAddress } = cart
 
-    //FIXME:Redirect user when is disconnected to shipping screen
     let history = useHistory()
     if (!shippingAddress.address) {
         history.push('/shipping')
@@ -19,7 +18,7 @@ export const PaymentMethodScreen = props => {
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(savePaymentMethod(paymentMethod))
-        props.history.push('/placeorder')
+        history.push('/placeorder')
     }
     return (
         <div>

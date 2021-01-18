@@ -5,7 +5,7 @@ import { listOrderMine } from '../actions/orderAction'
 import { LoadingBox } from '../components/LoadingBox'
 import { MessageBox } from '../components/MessageBox'
 
-export const OrderHistoryScreen = props => {
+export const OrderHistoryScreen = () => {
 
     const orderMineList = useSelector(state => state.orderMineList)
     const { orders, loading, error } = orderMineList

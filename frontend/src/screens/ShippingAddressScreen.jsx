@@ -1,19 +1,12 @@
 import React, { useCallback, useState } from 'react'
-import { Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveShippingAddress } from '../actions/cartAction'
 import { CheckoutSteps } from '../components/CheckoutSteps'
 
 export const ShippingAddressScreen = props => {
-    const userSignin = useSelector(state => state.userSignin)
-    const { userInfo } = userSignin
 
     const cart = useSelector(state => state.cart)
     const { shippingAddress } = cart
-
-    if (!userInfo) {
-        <Redirect to="/signin" />
-    }
 
     const [fullName, setFullName] = useState('')
     const [address, setAddress] = useState('')
@@ -39,7 +32,6 @@ export const ShippingAddressScreen = props => {
     }
 
     return (<>
-        {!userInfo && <Redirect to="/signin" />}
         <div>
             <CheckoutSteps step1 step2></CheckoutSteps>
         </div>
