@@ -1,10 +1,10 @@
 
 import { useDispatch, useSelector } from 'react-redux';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import { signout } from './actions/userAction';
 import { CartScreen } from './screens/CartScreen';
 import { HomeScreen } from './screens/HomeScreen';
-import {ProductScreen} from './screens/ProductScreen'
+import {ProductScreen} from './screens/ProductScreen';
 import { SigninScreen } from './screens/SigninScreen';
 import {RegisterScreen} from './screens/RegisterScreen'
 import { ShippingAddressScreen } from './screens/ShippingAddressScreen';
@@ -81,7 +81,7 @@ function App() {
             </header>
             <main>
                 <Route path="/cart/:id?" component={CartScreen}/>
-                <Route path="/product/:id" component={ProductScreen} />
+                <Route path="/product/:id" component={ProductScreen}/>
                 <Route path="/signin" component={SigninScreen} />
                 <Route path="/register" component={RegisterScreen} />
                 <PrivateRoute path="/shipping" component={ShippingAddressScreen}/>
@@ -91,7 +91,7 @@ function App() {
                 <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}/>
                 <PrivateRoute path="/profile" component={ProfileScreen} />
                 <AdminRoute path="/productList" component={ProductListScreen}/>
-                <Route path="/" component={HomeScreen} exact/>
+                <Route exact path="/" component={HomeScreen}/>
             </main>
             <footer className="row center"> 
                 All right reserved

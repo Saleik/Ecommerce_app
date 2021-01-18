@@ -8,7 +8,10 @@ import {
     PRODUCT_LIST_SUCCESS,
     PRODUCT_EDIT_REQUEST,
     PRODUCT_EDIT_SUCCESS,
-    PRODUCT_EDIT_FAIL
+    PRODUCT_EDIT_FAIL,
+    PRODUCT_CREATE_REQUEST,
+    PRODUCT_CREATE_FAIL,
+    PRODUCT_CREATE_SUCCESS
 
 } from "../constants/productConstants"
 export const listProducts = () => async (dispatch) => {
@@ -63,25 +66,63 @@ export const editProduct = (productId, updateProduct) => async (dispatch, getSta
         }
     })
 
-    const {userSignin:{userInfo}} = getState()
+    const {
+        userSignin: {
+            userInfo
+        }
+    } = getState()
     try {
         const {
             data
         } = await Axios.put(`/api/products/${productId}/edit`, updateProduct, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${userInfo.token}`
             }
         })
 
         dispatch({
-            type: PRODUCT_EDIT_SUCCESS, 
+            type: PRODUCT_EDIT_SUCCESS,
             payload: data
         })
     } catch (error) {
-        const message = error.response && error.response.data.message ? error.response.data.message : error.response
+        const message = error.response && error.response.data.message ? error.response.data.message : error.response;
 
         dispatch({
             type: PRODUCT_EDIT_FAIL,
+            payload: message
+        })
+    }
+}
+
+export const createProduct = () => async (dispatch, getState) => {
+    dispatch({
+        type: PRODUCT_CREATE_REQUEST
+    });
+
+    const {
+        userSignin: {
+            userInfo
+        }
+    } = getState();
+
+    try {
+        const {
+            data
+        } = await Axios.post('/api/products', {}, {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+            }
+        })
+
+        dispatch({
+            type: PRODUCT_CREATE_SUCCESS,
+            payload: data.product
+        })
+    } catch (error) {
+        const message = error.response && error.response.data.message ? error.response.data.message : error.response;
+
+        dispatch({
+            type: PRODUCT_CREATE_FAIL,
             payload: message
         })
     }

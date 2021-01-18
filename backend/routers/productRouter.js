@@ -6,6 +6,7 @@ import {
 import {
     Product
 } from '../models/productModel.js';
+import {isAdmin, isAuth} from '../utils.js'
 
 export const productRouter = express.Router();
 
@@ -35,3 +36,21 @@ productRouter.get('/seed', expressAsyncHandler(async (req, res) => {
         createdProducts
     });
 }))
+
+productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req, res)=>{
+    const product = new Product({
+        name: 'sample name', 
+        image:'/images/p1.jpg',
+        price: 0,
+        category: 'sample category',
+        brand:'sample brand',
+        countInStock: 0,
+        rating:0,
+        numReviews: 0, 
+        description:'sample description',
+    })
+
+    const createdProduct = await product.save()
+
+    res.send({message: 'Product Created', product: createdProduct})
+}) )
