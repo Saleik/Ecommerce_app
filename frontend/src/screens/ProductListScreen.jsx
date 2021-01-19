@@ -62,7 +62,7 @@ export const ProductListScreen = props => {
                             <td>{product.brand}</td>
                             <td>
                                 <button type="button" className="small"
-                                    onClick={() => props.history.push(`/products/${product._id}/edit`)}>Edit</button>
+                                    onClick={() => props.history.push(`/product/${product._id}/edit`)}>Edit</button>
                                 <button type="button" className="small"
                                     onClick={() => deleteHandler(product._id)}
                                 >Delete</button>

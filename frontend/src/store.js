@@ -8,7 +8,8 @@ import thunk from "redux-thunk"
 import {
     productCreateReducer,
     productDetailsReducers,
-    productListReducers
+    productListReducers,
+    productUpdateReducer
 } from './reducers/productReducers'
 import {
     cartReducer
@@ -49,7 +50,8 @@ const reducer = combineReducers({
     orderMineList: orderMineListReducer,
     userDetails: userDetailsReducer,
     userUpdateProfile: userUpdateProfileReducer,
-    productCreate: productCreateReducer
+    productCreate: productCreateReducer,
+    productUpdate: productUpdateReducer
 
 })
 

@@ -16,6 +16,7 @@ import { ProfileScreen } from './screens/ProfileScreen';
 import { PrivateRoute } from './components/PrivateRoute';
 import { AdminRoute } from './components/AdminRoute';
 import { ProductListScreen } from './screens/ProductListScreen';
+import { ProductEditScreen } from './screens/ProductEditScreen';
 
 
 function App() {
@@ -66,7 +67,7 @@ function App() {
                                     <Link to="/dashboard">Dashboard</Link>
                                 </li>
                                 <li>
-                                    <Link to="/productList">Products</Link>
+                                    <Link to="/productlist">Products</Link>
                                 </li>
                                 <li>
                                     <Link to="/orders">Orders</Link>
@@ -81,7 +82,8 @@ function App() {
             </header>
             <main>
                 <Route path="/cart/:id?" component={CartScreen}/>
-                <Route path="/product/:id" component={ProductScreen}/>
+                <Route exact path="/product/:id" component={ProductScreen}/>
+                <Route exact path="/product/:id/edit" component={ProductEditScreen}/>
                 <Route path="/signin" component={SigninScreen} />
                 <Route path="/register" component={RegisterScreen} />
                 <PrivateRoute path="/shipping" component={ShippingAddressScreen}/>
@@ -90,7 +92,7 @@ function App() {
                 <PrivateRoute path="/order/:id" component={OrderScreen} />
                 <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}/>
                 <PrivateRoute path="/profile" component={ProfileScreen} />
-                <AdminRoute path="/productList" component={ProductListScreen}/>
+                <AdminRoute path="/productlist" component={ProductListScreen}/>
                 <Route exact path="/" component={HomeScreen}/>
             </main>
             <footer className="row center"> 
