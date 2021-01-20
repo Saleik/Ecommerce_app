@@ -17,18 +17,22 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { AdminRoute } from './components/AdminRoute';
 import { ProductListScreen } from './screens/ProductListScreen';
 import { ProductEditScreen } from './screens/ProductEditScreen';
+import { OrderListScreen } from './screens/OrderListScreen';
+import { CART_EMPTY } from './constants/cartConstants';
 
 
 function App() {
+   
+    const cart = useSelector(state => state.cart);  
+    const {cartItems} = cart;
 
-    const cart = useSelector(state => state.cart);
-    const {cartItems} = cart
-    const userSignin = useSelector(state => state.userSignin)
+    const userSignin = useSelector(state => state.userSignin);
     const {userInfo}= userSignin;
     const dispatch = useDispatch();
 
     const signoutHandler = ()=>{
-        dispatch(signout())
+        dispatch({type: CART_EMPTY});
+        dispatch(signout());
     }
     return( <Router>
       <div className="grid-container">
@@ -38,7 +42,7 @@ function App() {
                 </div>
                 <div>
                     <Link to="/cart">Cart
-                    {cartItems.length > 0 && (<span className="badge">{cartItems.length}</span>)}
+                    {cartItems.length > 0 ? (<span className="badge">{cartItems.length}</span>):''}
                     </Link>
                     {
                         userInfo ? (
@@ -93,6 +97,7 @@ function App() {
                 <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}/>
                 <PrivateRoute path="/profile" component={ProfileScreen} />
                 <AdminRoute path="/productlist" component={ProductListScreen}/>
+                <AdminRoute path="/orders" component={OrderListScreen}/>
                 <Route exact path="/" component={HomeScreen}/>
             </main>
             <footer className="row center"> 
