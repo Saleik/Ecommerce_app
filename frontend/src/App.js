@@ -18,7 +18,9 @@ import { AdminRoute } from './components/AdminRoute';
 import { ProductListScreen } from './screens/ProductListScreen';
 import { ProductEditScreen } from './screens/ProductEditScreen';
 import { OrderListScreen } from './screens/OrderListScreen';
-import { CART_EMPTY } from './constants/cartConstants';
+import { CART_EMPTY, CART_SHIPPING_ADDRESS_RESET} from './constants/cartConstants';
+import { UserListScreen } from './screens/UserListScreen';
+import { UserEditScreen } from './screens/UserEditScreen';
 
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
     const dispatch = useDispatch();
 
     const signoutHandler = ()=>{
+        dispatch({type:CART_SHIPPING_ADDRESS_RESET});
         dispatch({type: CART_EMPTY});
         dispatch(signout());
     }
@@ -98,6 +101,8 @@ function App() {
                 <PrivateRoute path="/profile" component={ProfileScreen} />
                 <AdminRoute path="/productlist" component={ProductListScreen}/>
                 <AdminRoute path="/orders" component={OrderListScreen}/>
+                <AdminRoute path="/users" component={UserListScreen}/>
+                <AdminRoute path="/users/:id/edit" component={UserEditScreen}/>
                 <Route exact path="/" component={HomeScreen}/>
             </main>
             <footer className="row center"> 

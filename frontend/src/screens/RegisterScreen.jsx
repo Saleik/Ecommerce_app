@@ -17,6 +17,7 @@ export const RegisterScreen = props => {
     const userRegister = useSelector(state => state.userRegister)
     const { userInfo, error, loading } = userRegister;
 
+
     const dispatch = useDispatch()
     const submitHandler = (e) => {
         e.preventDefault()

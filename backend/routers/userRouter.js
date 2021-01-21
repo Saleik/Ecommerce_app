@@ -9,22 +9,28 @@ import {
 } from '../models/userModel.js';
 import {
     generateToken,
+    isAdmin,
     isAuth
 } from '../utils.js';
 
 export const userRouter = express.Router();
 
+userRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (re, res) => {
+    const users = await User.find({});
+    res.send(users);
+}));
+
 userRouter.get('/seed', expressAsyncHandler(async (req, res) => {
-    const createdUsers = await User.insertMany(data.users)
+    const createdUsers = await User.insertMany(data.users);
     res.send({
         createdUsers
     });
-}))
+}));
 
 userRouter.post('/signin', expressAsyncHandler(async (req, res) => {
     const user = await User.findOne({
         email: req.body.email
-    })
+    });
 
     if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
@@ -37,22 +43,22 @@ userRouter.post('/signin', expressAsyncHandler(async (req, res) => {
             })
             return;
         }
-    }
+    };
 
     res.status(401).send({
         message: 'invalid email or password'
-    })
+    });
 
-}))
+}));
 
 userRouter.post('/register', expressAsyncHandler(async (req, res) => {
     const user = new User({
         name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8)
-    })
+    });
 
-    const createdUser = await user.save()
+    const createdUser = await user.save();
 
     res.send({
         _id: createdUser._id,
@@ -60,23 +66,23 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
         email: createdUser.email,
         isAdmin: createdUser.isAdmin,
         token: generateToken(createdUser)
-    })
-}))
+    });
+}));
 
 userRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id);
 
     if (user) {
         res.send(user)
     } else {
         res.status(404).send({
             message: 'User Not Found'
-        })
+        });
     }
-}))
+}));
 
 userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id)
+    const user = await User.findById(req.user._id);
     if (user) {
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
@@ -84,7 +90,7 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
             user.password = bcrypt.hashSync(req.body.password, 8);
         }
 
-        const updatedUser = await user.save()
+        const updatedUser = await user.save();
 
         res.send({
             _id: updatedUser._id,
@@ -92,6 +98,48 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
             email: updatedUser.email,
             isAdmin: updatedUser.isAdmin,
             token: generateToken(updatedUser)
-        })
+        });
+    }
+}));
+
+userRouter.delete('/:id', isAuth, expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+        if (user.isAdmin) {
+            return res.status(403).send({
+                message: 'Can Not Delete Admin User'
+            });
+        }
+        const userDeleted = await user.remove();
+        res.send({
+            message: 'User Deleted Successfully.',
+            user: userDeleted
+        });
+    } else {
+        res.status(404).send({
+            message: 'User Not Found.'
+        });
+    }
+}));
+
+userRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.isAdmin = req.body.isAdmin;
+        user.isSeller = req.body.isSeller;
+
+        const userUpdated = await user.save();
+
+        res.send({
+            message: 'User Updated Successfully',
+            user: userUpdated
+        });
+    } else {
+        res.status(404).send({
+            message: 'User Not Found.'
+        });
     }
 }))

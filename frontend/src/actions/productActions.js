@@ -143,20 +143,23 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     } = getState();
 
     try {
-        await Axios.delete(`/api/products/${productId}`, {
+
+        const{data} = await Axios.delete(`/api/products/${productId}`, {
             headers: {
                 Authorization: `Bearer ${userInfo.token}`
             }
         });
+       
 
         dispatch({
-            type: PRODUCT_DELETE_SUCCESS
-        })
+            type: PRODUCT_DELETE_SUCCESS,
+            payload: data
+        });
     } catch (error) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.response;
         dispatch({
             type: PRODUCT_DELETE_FAIL,
             payload: message
-        })
+        });
     }
 }

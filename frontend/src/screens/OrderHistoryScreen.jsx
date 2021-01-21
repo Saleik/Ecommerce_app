@@ -1,19 +1,27 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
 import { listOrderMine } from '../actions/orderAction'
 import { LoadingBox } from '../components/LoadingBox'
 import { MessageBox } from '../components/MessageBox'
 
 export const OrderHistoryScreen = () => {
 
-    const orderMineList = useSelector(state => state.orderMineList)
-    const { orders, loading, error } = orderMineList
-    const history = useHistory()
-    const dispatch = useDispatch()
+    const orderMineList = useSelector(state => state.orderMineList);
+    const { orders, loading, error } = orderMineList;
+
+    const history = useHistory();
+
+    const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(listOrderMine())
-    }, [dispatch])
+        dispatch(listOrderMine());
+    }, [dispatch]);
+
+    const dateHandler = (date) => {
+        const dateParse = moment(date).format("DD/MM/YYYY");
+        return dateParse
+    };
 
     return (
         <div>
@@ -33,7 +41,7 @@ export const OrderHistoryScreen = () => {
                     <tbody>
                         {orders.map(order => (<tr key={order._id}>
                             <td>{order._id}</td>
-                            <td>{order.createdAt}</td>
+                            <td>{dateHandler(order.createdAt)}</td>
                             <td>{order.totalPrice}</td>
                             <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
                             <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : 'No'}</td>

@@ -208,13 +208,15 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
     } = getState();
 
     try {
-        await Axios.delete(`/api/orders/${orderId}`, {
+        const {data} = await Axios.delete(`/api/orders/${orderId}`, {
             headers: {
                 Authorization: `Bearer ${userInfo.token}`,
             }
         });
         dispatch({
-            type: ORDER_DELETE_SUCCESS
+            type: ORDER_DELETE_SUCCESS,
+            payload:data
+
         });
 
     } catch (error) {
@@ -239,7 +241,7 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
     } = getState();
 
     try {
-        await Axios.put(`/api/orders/${orderId}/deliver`, {}, {
+        const{data} = await Axios.put(`/api/orders/${orderId}/deliver`, {}, {
             headers: {
                 Authorization: `Bearer ${userInfo.token}`,
             }
@@ -247,6 +249,7 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
 
         dispatch({
             type: ORDER_DELIVER_SUCCESS,
+            payload:data
         })
     } catch (error) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;

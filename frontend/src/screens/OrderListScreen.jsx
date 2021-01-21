@@ -55,10 +55,10 @@ export const OrderListScreen = props => {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map(order => (
+                            {orders.length > 0 && orders.map(order => (
                                 <tr key={order._id}>
                                     <td>{order._id}</td>
-                                    <td>{order.user.name}</td>
+                                    <td>{order.user ? order.user.name : 'User is no longer registered'}</td>
                                     <td>{dateHandler(order.createdAt)}</td>
                                     <td>{order.totalPrice}</td>
                                     <td>{order.isPaid ? dateHandler(order.paidAt) : 'No'}</td>
