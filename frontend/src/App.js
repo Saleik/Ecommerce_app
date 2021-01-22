@@ -22,6 +22,7 @@ import { CART_EMPTY, CART_SHIPPING_ADDRESS_RESET} from './constants/cartConstant
 import { UserListScreen } from './screens/UserListScreen';
 import { UserEditScreen } from './screens/UserEditScreen';
 import { SellerRoute } from './components/SellerRoute';
+import { SellerScreen } from './screens/SellerScreen';
 
 
 function App() {
@@ -101,6 +102,7 @@ function App() {
                 </div>
             </header>
             <main>
+                <Route exact path="/seller/:id" component={SellerScreen}/>
                 <Route path="/cart/:id?" component={CartScreen}/>
                 <Route exact path="/product/:id" component={ProductScreen}/>
                 <Route exact path="/product/:id/edit" component={ProductEditScreen}/>

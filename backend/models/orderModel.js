@@ -77,7 +77,7 @@ const orderSchema = mongoose.Schema({
         ref: 'User',
         required: true
     },
-    seller:{ 
+    seller: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
