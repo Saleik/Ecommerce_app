@@ -21,6 +21,7 @@ import { OrderListScreen } from './screens/OrderListScreen';
 import { CART_EMPTY, CART_SHIPPING_ADDRESS_RESET} from './constants/cartConstants';
 import { UserListScreen } from './screens/UserListScreen';
 import { UserEditScreen } from './screens/UserEditScreen';
+import { SellerRoute } from './components/SellerRoute';
 
 
 function App() {
@@ -65,7 +66,19 @@ function App() {
                             </div>)
                         :(<Link to="/signin">Sign in</Link>)
                     }
-
+                    {userInfo && userInfo.isSeller && (
+                        <div className="dropdown">
+                            <Link to="#">Seller {' '}<i className="fa fa-caret-down"></i></Link>
+                            <ul className="dropdown-content">
+                                <li>
+                                    <Link to="/productlist/seller">Products</Link>
+                                </li>
+                                <li>
+                                    <Link to="/orders/seller">Orders</Link>
+                                </li>
+                            </ul>
+                        </div>
+                    )}
                     {userInfo && userInfo.isAdmin &&(
                         <div className="dropdown">
                             <Link to="#admin">Admin{' '}<i className="fa fa-caret-down"></i></Link>
@@ -103,6 +116,8 @@ function App() {
                 <AdminRoute path="/orders" component={OrderListScreen}/>
                 <AdminRoute path="/users" component={UserListScreen}/>
                 <AdminRoute path="/users/:id/edit" component={UserEditScreen}/>
+                <SellerRoute path="/productlist/seller" component={ProductListScreen}/>
+                <SellerRoute path="/orders/seller" component={OrderListScreen}/>
                 <Route exact path="/" component={HomeScreen}/>
             </main>
             <footer className="row center"> 

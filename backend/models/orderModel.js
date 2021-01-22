@@ -77,6 +77,10 @@ const orderSchema = mongoose.Schema({
         ref: 'User',
         required: true
     },
+    seller:{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
     isPaid: {
         type: Boolean,
         default: false

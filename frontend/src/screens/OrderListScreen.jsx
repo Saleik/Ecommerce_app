@@ -7,6 +7,9 @@ import { MessageBox } from '../components/MessageBox';
 import { ORDER_DELETE_RESET } from '../constants/orderConstants';
 
 export const OrderListScreen = props => {
+    const sellerMode = props.match.path.indexOf('/seller') >= 0;
+    const userSignin = useSelector(state => state.userSignin);
+    const {userInfo} = userSignin;
 
     const orderList = useSelector(state => state.orderList);
     const { loading, error, orders } = orderList;
@@ -22,8 +25,8 @@ export const OrderListScreen = props => {
                 type: ORDER_DELETE_RESET
             });
         }
-        dispatch(listOrders());
-    }, [dispatch, successDelete]);
+        dispatch(listOrders({seller: sellerMode ? userInfo._id:''}));
+    }, [dispatch, successDelete, sellerMode, userInfo]);
 
     const dateHandler = (date) => {
         const dateParse = moment(date).format("DD/MM/YYYY");
@@ -60,7 +63,7 @@ export const OrderListScreen = props => {
                                     <td>{order._id}</td>
                                     <td>{order.user ? order.user.name : 'User is no longer registered'}</td>
                                     <td>{dateHandler(order.createdAt)}</td>
-                                    <td>{order.totalPrice}</td>
+                                    <td>{order.totalPrice.toFixed(2)}</td>
                                     <td>{order.isPaid ? dateHandler(order.paidAt) : 'No'}</td>
                                     <td>{order.isDelivered ? dateHandler(order.deliveredAt) : 'No'}</td>
                                     <td>

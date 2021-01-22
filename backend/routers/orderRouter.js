@@ -5,13 +5,16 @@ import {
 } from '../models/orderModel.js'
 import {
     isAdmin,
-    isAuth
+    isAuth,
+    isSellerOrAdmin
 } from '../utils.js'
 
 export const orderRouter = express.Router();
 
-orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({}).populate('user', 'name');
+orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+    const seller = req.query.seller;
+    const sellerFilter = seller ? {seller} : '';
+    const orders = await Order.find({...sellerFilter}).populate('user', 'name');
 
     if (orders) {
         res.send(orders);
@@ -36,6 +39,7 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
         })
     } else {
         const order = new Order({
+            seller: req.body.cartItems[0].seller,
             orderItems: req.body.orderItems,
             shippingAddress: req.body.shippingAddress,
             itemsPrice: req.body.itemsPrice,
