@@ -15,6 +15,16 @@ import {
 
 export const userRouter = express.Router();
 
+userRouter.get('/top-sellers', expressAsyncHandler(async (req, res) => {
+    const topSellers = await User.find({
+        isSeller: true
+    }).sort({
+        'seller.rating': -1
+    }).limit(3);
+
+    res.send(topSellers);
+}));
+
 userRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (re, res) => {
     const users = await User.find({});
     res.send(users);
@@ -88,7 +98,7 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
     if (user) {
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
-        if(user.isSeller){
+        if (user.isSeller) {
             user.seller.name = req.body.sellerName || user.seller.name;
             user.seller.logo = req.body.sellerLogo || user.seller.logo;
             user.seller.description = req.body.sellerDescription || user.seller.description;

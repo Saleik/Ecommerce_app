@@ -50,8 +50,10 @@ export const ProductEditScreen = props => {
 
     const userSignin = useSelector(state => state.userSignin);
     const { userInfo } = userSignin;
+
     const [loadingUpload, setLoadingUpload] = useState(false);
     const [errorUpload, setErrorUpload] = useState('');
+
     const uploadFileHandler = async (e) => {
 
         const file = e.target.files[0];
@@ -64,13 +66,14 @@ export const ProductEditScreen = props => {
             const { data } = await Axios.post('/api/uploads', bodyFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${userInfo.token}`,
+                    Authorization: `Bearer ${userInfo.token}`
                 }
             });
             setImage(data);
             setLoadingUpload(false);
         } catch (error) {
             setErrorUpload(error.message);
+            setLoadingUpload(false);
         }
     };
     return (
