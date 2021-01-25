@@ -118,7 +118,7 @@ export const ProductEditScreen = props => {
                         </div>
                         <div>
                             <label htmlFor="description">Description</label>
-                            <input type="text" name="description" id="description" placeholder="Enter description" defaultValue={description} onChange={(e) => setDescription(e.target.value)} />
+                            <input type="text" row="3" name="description" id="description" placeholder="Enter description" defaultValue={description} onChange={(e) => setDescription(e.target.value)} />
                         </div>
                         <div>
                             <label />

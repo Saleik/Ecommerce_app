@@ -52,7 +52,7 @@ export const UserListScreen = props => {
                                 <td>{user.isSeller ? 'YES' : 'NO'}</td>
                                 <td>{user.isAdmin ? 'YES' : 'NO'}</td>
                                 <td>
-                                    <button type="button" className="small" onClick={() => props.history.push(`/users/${user._id}/edit`)}>Details</button>
+                                    <button type="button" className="small" onClick={() => props.history.push(`/users/${user._id}/edit`)}>Edit</button>
                                     <button type="button" className="small" onClick={() => deleteHandler(user._id)}>Delete</button>
                                 </td>
                             </tr>

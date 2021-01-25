@@ -1,9 +1,9 @@
 import multer from 'multer';
 import express from 'express'
 import {
-    isAdmin,
     isAuth,
-    isSeller
+    isSeller,
+    isSellerOrAdmin
 } from '../utils.js';
 
 export const uploadRouter = express.Router();
@@ -25,7 +25,7 @@ const uploadMiddleware = multer({
     }
 });
 
-uploadRouter.post('/', uploadMiddleware.single('imageFile'), isAuth, isAdmin, (req, res) => {
+uploadRouter.post('/', uploadMiddleware.single('imageFile'), isAuth, isSellerOrAdmin, (req, res) => {
     res.send(`/${req.file.path}`);
 });
 

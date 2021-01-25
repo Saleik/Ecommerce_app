@@ -1,5 +1,6 @@
 import {
     CART_ADD_ITEM,
+    CART_ADD_ITEM_FAIL,
     CART_EMPTY,
     CART_REMOVE_ITEM,
     CART_SAVE_PAYMENT_METHOD,
@@ -19,18 +20,20 @@ export const cartReducer = (state = {
             if (existItem) {
                 return {
                     ...state,
-                    cartItems: state.cartItems.map(x => x.product === existItem.product ? item : x)
+                    cartItems: state.cartItems.map(x => x.product === existItem.product ? item : x),
+                    error: ''
                 }
             } else {
                 return {
                     ...state,
-                    cartItems: [...state.cartItems, item]
+                    cartItems: [...state.cartItems, item],
+                    error: ''
                 }
             }
             case CART_REMOVE_ITEM:
 
                 return {
-                    ...state, cartItems: state.cartItems.filter(x => x.product !== action.payload)
+                    ...state, error: '', cartItems: state.cartItems.filter(x => x.product !== action.payload)
                 }
 
                 case CART_SAVE_SHIPPING_ADDRESS:
@@ -43,13 +46,17 @@ export const cartReducer = (state = {
                         }
                         case CART_EMPTY:
                             return {
-                                ...state, cartItems: [],
+                                ...state, error: '', cartItems: [],
                             }
                             case CART_SHIPPING_ADDRESS_RESET:
                                 return {
-                                    ...state, shippingAddress:{}
+                                    ...state, shippingAddress: {}
                                 }
-                                default:
-                                    return state
+                                case CART_ADD_ITEM_FAIL:
+                                    return {
+                                        ...state, error: action.payload
+                                    }
+                                    default:
+                                        return state
     }
 }

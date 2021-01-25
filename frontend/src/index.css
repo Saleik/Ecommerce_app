@@ -176,7 +176,8 @@ header a {
 
 /* image */
 img {
-  border-radius: .5rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
 }
 
 img.small {
