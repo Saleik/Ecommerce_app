@@ -135,6 +135,9 @@ function App() {
                                     <Link to={`/search/category/${c}`} onClick={()=> setSideBarIsOpen(false)}>{c}</Link>
                                 </li>))
                             )}
+                            <li className="category">
+                                <Link to='/search/name/' onClick={()=> setSideBarIsOpen(false)}>Any</Link>
+                            </li>
                         </ul>
             </aside>
             <main>
@@ -149,9 +152,11 @@ function App() {
                 <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
                 <PrivateRoute path="/order/:id" component={OrderScreen} />
                 <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}/>
+                <Route exact path="/search" component={SearchScreen}/>
                 <Route exact path="/search/name/:name?" component={SearchScreen}/>
                 <Route exact path="/search/category/:category" component={SearchScreen}/>
                 <Route exact path="/search/category/:category/name/:name" component={SearchScreen}/>
+                <Route exact path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order" component={SearchScreen}/>
                 <PrivateRoute path="/profile" component={ProfileScreen} />
                 <AdminRoute path="/productlist" component={ProductListScreen}/>
                 <AdminRoute path="/orders" component={OrderListScreen}/>
