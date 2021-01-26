@@ -7,10 +7,11 @@ import {
 import thunk from "redux-thunk"
 import {
     productCreateReducer,
-    productDetailsReducers,
-    productListReducers,
+    productDetailsReducer,
+    productListReducer,
     productUpdateReducer,
-    productDeleteReducer
+    productDeleteReducer,
+    productCategoryListReducer
 } from './reducers/productReducers'
 import {
     cartReducer
@@ -47,8 +48,8 @@ const initialState = {
     },
 };
 const reducer = combineReducers({
-    productList: productListReducers,
-    productDetails: productDetailsReducers,
+    productList: productListReducer,
+    productDetails: productDetailsReducer,
     cart: cartReducer,
     userSignin: userSigninReducer,
     userRegister: userRegisterReducer,
@@ -68,6 +69,7 @@ const reducer = combineReducers({
     userList: userListReducer,
     userDelete: userDeleteReducer,
     userTopSellersList: userTopSellersListReducer,
+    productCategoryList: productCategoryListReducer,
 
 
 })
