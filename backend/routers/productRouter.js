@@ -7,7 +7,6 @@ import {
     Product
 } from '../models/productModel.js';
 import {
-    isAdmin,
     isAuth,
     isSellerOrAdmin
 } from '../utils.js'
@@ -16,12 +15,21 @@ export const productRouter = express.Router();
 
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
 
+    const name = req.query.name || '';
     const seller = req.query.seller || '';
+
+    const nameFilter = name ? {
+        name: {
+            $regex: name,
+            $options: 'i'
+        }
+    } : {};
     const sellerFilter = seller ? {
         seller
     } : {};
     const products = await Product.find({
-        ...sellerFilter
+        ...sellerFilter,
+        ...nameFilter
     }).populate('seller', 'seller.name seller.logo');
     res.send(
         products
