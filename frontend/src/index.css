@@ -344,3 +344,17 @@ img.large {
 .imgSlide {
   border-radius: 0 !important;
 }
+
+/* search */
+
+.search button {
+  border-radius: 0 .5rem .5rem 0;
+  border-right: none;
+  margin-right: .5rem;
+}
+
+.search input {
+  border-radius: .5rem 0 0 .5rem;
+  border-right: none;
+  margin-left: .5rem;
+}

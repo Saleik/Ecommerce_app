@@ -12,7 +12,6 @@ export const ProductListScreen = props => {
 
     const productList = useSelector(state => state.productList);
     const { loading, error, products } = productList;
-
     const productCreate = useSelector(state => state.productCreate);
     const {
         loading: loadingCreate,
@@ -34,6 +33,7 @@ export const ProductListScreen = props => {
         if (successDelete) {
             dispatch({ type: PRODUCT_DELETE_RESET })
         }
+
         dispatch(listProducts({seller: sellerMode ? userInfo._id:''}));
     }, [dispatch, successCreate, createdProduct, props.history, successDelete, sellerMode, userInfo]);
 

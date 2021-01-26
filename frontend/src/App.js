@@ -23,6 +23,8 @@ import { UserListScreen } from './screens/UserListScreen';
 import { UserEditScreen } from './screens/UserEditScreen';
 import { SellerRoute } from './components/SellerRoute';
 import { SellerScreen } from './screens/SellerScreen';
+import { SearchBox } from './components/SearchBox';
+import { SearchScreen } from './screens/SearchScreen';
 
 
 function App() {
@@ -43,7 +45,10 @@ function App() {
       <div className="grid-container">
             <header className="row">
                 <div className="brand">
-                    <Link to="/">Ecommerce Lab</Link>
+                    <Link to="/">Ecommerce</Link>
+                </div>
+                <div>
+                    <Route render={({history}) => <SearchBox history={history}/>} />
                 </div>
                 <div>
                     <Link to="/cart">Cart
@@ -113,6 +118,7 @@ function App() {
                 <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
                 <PrivateRoute path="/order/:id" component={OrderScreen} />
                 <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}/>
+                <Route exact path="/search/name/:name?" component={SearchScreen}/>
                 <PrivateRoute path="/profile" component={ProfileScreen} />
                 <AdminRoute path="/productlist" component={ProductListScreen}/>
                 <AdminRoute path="/orders" component={OrderListScreen}/>

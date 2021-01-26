@@ -13,7 +13,6 @@ export const ProductScreen = props => {
     const productDetails = useSelector(state => state.productDetails)
     const { product, loading, error } = productDetails
 
-
     useEffect(() => {
         dispatch(detailsProduct(productId))
     }, [dispatch, productId])
