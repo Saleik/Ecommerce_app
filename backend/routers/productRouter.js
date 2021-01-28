@@ -45,40 +45,48 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
         seller
     } : {};
 
-    const sortOrder = ()=>{
+    const sortOrder = () => {
         switch (order) {
             case 'lowest':
-                return {price:1};
+                return {
+                    price: 1
+                };
             case 'highest':
-                return {price:-1};
+                return {
+                    price: -1
+                };
             case 'toprated':
-                return {rating:-1};
+                return {
+                    rating: -1
+                };
             default:
-                return { _id:-1};
+                return {
+                    _id: -1
+                };
         }
     }
     const products = await Product.find({
-        ...sellerFilter,
-        ...nameFilter,
-        ...categoryFilter,
-        ...priceFilter,
-        ...ratingFilter
-    }).populate('seller', 'seller.name seller.logo')
-    .sort(sortOrder());
-    res.send(
+            ...sellerFilter,
+            ...nameFilter,
+            ...categoryFilter,
+            ...priceFilter,
+            ...ratingFilter
+        }).populate('seller', 'seller.name seller.logo')
+        .sort(sortOrder());
+    res.status(200).send(
         products
     )
 }))
 
 productRouter.get('/categories', expressAsyncHandler(async (req, res) => {
     const categories = await Product.find().distinct('category');
-    res.send(categories);
+    res.status(200).send(categories);
 }))
 
 productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id).populate('seller', 'seller.name seller.logo seller.rating seller.numReviews');
     if (product) {
-        res.send(product)
+        res.status(200).send(product)
     } else {
         res.status(404).send({
             message: "Product not Found"
@@ -111,7 +119,7 @@ productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req,
 
     const createdProduct = await product.save()
 
-    res.send({
+    res.status(201).send({
         message: 'Product Created',
         product: createdProduct
     })
@@ -133,7 +141,7 @@ productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (re
 
         const updatedProduct = await product.save();
 
-        res.send({
+        res.status(200).send({
             message: "Product Updated Successfully",
             product: updatedProduct
         })
@@ -149,7 +157,7 @@ productRouter.delete('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async 
 
     if (product) {
         const deletedProduct = await product.remove();
-        res.send({
+        res.status(200).send({
             message: 'product Deleted',
             product: deletedProduct
         });
@@ -157,5 +165,42 @@ productRouter.delete('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async 
         res.status(404).send({
             message: 'Product Not Found'
         })
+    }
+}))
+
+productRouter.post('/:id/reviews', isAuth, expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    /*  console.group();
+     console.log(typeof req.user._id);
+     product.reviews.find(x => console.log(x._userId.toString()));
+     console.groupEnd();
+     return; */
+    if (product) {
+        if (product.reviews.find(x => x._userId.toString() === req.user._id)) {
+            return res.status(400).send({
+                message: 'You already submitted a review'
+            });
+        }
+        const review = {
+            _userId: req.user._id,
+            name: req.user.name,
+            comment: req.body.comment,
+            rating: parseInt(req.body.rating),
+        };
+        product.reviews.push(review);
+        product.numReviews = product.reviews.length;
+        product.rating = product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length;
+
+        const updateProduct = await product.save();
+        res.status(201).send({
+            message: 'Product Review Created',
+            review: updateProduct.reviews[updateProduct.reviews.length - 1]
+        });
+
+    } else {
+        res.status(404).send({
+            message: 'Product Not Found'
+        });
     }
 }))

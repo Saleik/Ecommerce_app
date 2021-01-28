@@ -22,17 +22,17 @@ userRouter.get('/top-sellers', expressAsyncHandler(async (req, res) => {
         'seller.rating': -1
     }).limit(3);
 
-    res.send(topSellers);
+    res.status(200).send(topSellers);
 }));
 
 userRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (re, res) => {
     const users = await User.find({});
-    res.send(users);
+    res.status(200).send(users);
 }));
 
 userRouter.get('/seed', expressAsyncHandler(async (req, res) => {
     const createdUsers = await User.insertMany(data.users);
-    res.send({
+    res.status(200).send({
         createdUsers
     });
 }));
@@ -44,7 +44,7 @@ userRouter.post('/signin', expressAsyncHandler(async (req, res) => {
 
     if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-            res.send({
+            res.status(200).send({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
@@ -71,7 +71,7 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
 
     const createdUser = await user.save();
 
-    res.send({
+    res.status(201).send({
         _id: createdUser._id,
         name: createdUser.name,
         email: createdUser.email,
@@ -85,7 +85,7 @@ userRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-        res.send(user)
+        res.status(200).send(user)
     } else {
         res.status(404).send({
             message: 'User Not Found'
@@ -109,7 +109,7 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
 
         const updatedUser = await user.save();
 
-        res.send({
+        res.status(200).send({
             _id: updatedUser._id,
             name: updatedUser.name,
             email: updatedUser.email,
@@ -129,7 +129,7 @@ userRouter.delete('/:id', isAuth, expressAsyncHandler(async (req, res) => {
             });
         }
         const userDeleted = await user.remove();
-        res.send({
+        res.status(200).send({
             message: 'User Deleted Successfully.',
             user: userDeleted
         });
@@ -151,7 +151,7 @@ userRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => 
 
         const userUpdated = await user.save();
 
-        res.send({
+        res.status(200).send({
             message: 'User Updated Successfully',
             user: userUpdated
         });

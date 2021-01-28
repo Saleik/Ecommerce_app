@@ -17,8 +17,10 @@ import {
     PRODUCT_DELETE_SUCCESS,
     PRODUCT_LIST_CATEGORY_REQUEST,
     PRODUCT_LIST_CATEGORY_SUCCESS,
-    PRODUCT_LIST_CATEGORY_FAIL
-
+    PRODUCT_LIST_CATEGORY_FAIL,
+    PRODUCT_REVIEW_CREATE_REQUEST,
+    PRODUCT_REVIEW_CREATE_SUCCESS,
+    PRODUCT_REVIEW_CREATE_FAIL,
 } from "../constants/productConstants"
 export const listProducts = ({
     seller = '',
@@ -27,7 +29,7 @@ export const listProducts = ({
     min = 0,
     max = 0,
     rating = 0,
-    order=''
+    order = ''
 }) => async (dispatch) => {
     dispatch({
         type: PRODUCT_LIST_REQUEST
@@ -195,6 +197,43 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
         const message = error.response && error.response.data.message ? error.response.data.message : error.response;
         dispatch({
             type: PRODUCT_DELETE_FAIL,
+            payload: message
+        });
+    }
+}
+
+export const createReview = (productId, review) => async (dispatch, getState) => {
+    dispatch({
+        type: PRODUCT_REVIEW_CREATE_REQUEST,
+        payload: {
+            productId,
+            review
+        }
+    });
+
+    const {
+        userSignin: {
+            userInfo
+        }
+    } = getState();
+
+    try {
+        const {
+            data
+        } = await Axios.post(`/api/products/${productId}/reviews`, review, {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        });
+
+        dispatch({
+            type: PRODUCT_REVIEW_CREATE_SUCCESS,
+            payload: data.review
+        });
+    } catch (error) {
+        const message = error.response && error.response.data.message ? error.response.data.message : error.response;
+        dispatch({
+            type: PRODUCT_REVIEW_CREATE_FAIL,
             payload: message
         });
     }

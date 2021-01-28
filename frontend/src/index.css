@@ -185,6 +185,10 @@ aside {
   transition: all .5s;
 }
 
+aside a{
+  color: #000;
+}
+
 aside.open {
   transform: translateX(0);
 }
@@ -412,4 +416,10 @@ img.large {
 
 .active {
   font-weight: bold;
+}
+
+/* search filter*/
+
+.price-filter a, .department-filter a{
+  color: blue;
 }

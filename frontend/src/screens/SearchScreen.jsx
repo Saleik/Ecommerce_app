@@ -58,7 +58,7 @@ export const SearchScreen = props => {
                         )}
 
                 <div>
-                    Sort by {' '}
+                    <strong>Sort by {' '}</strong>
                     <select value={order} onChange={e => {
                         props.history.push(getFilterUrl({ order: e.target.value }));
                     }}>
@@ -72,7 +72,7 @@ export const SearchScreen = props => {
             <div className="row top">
                 <div className="col-1">
                     <h3>Department</h3>
-                    <div>
+                    <div className="department-filter">
                         {loadingCategories ? (<LoadingBox />) : errorCategories ? (<MessageBox variant="danger">{errorCategories}</MessageBox>) : (
                             <ul>
                                 <li>
@@ -86,7 +86,7 @@ export const SearchScreen = props => {
                             </ul>
                         )}
                     </div>
-                    <div>
+                    <div className="price-filter">
                         <h3>Price</h3>
                         <ul>
                             {prices.map(p => (<li key={p.name}>
