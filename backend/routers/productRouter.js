@@ -171,11 +171,7 @@ productRouter.delete('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async 
 productRouter.post('/:id/reviews', isAuth, expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
-    /*  console.group();
-     console.log(typeof req.user._id);
-     product.reviews.find(x => console.log(x._userId.toString()));
-     console.groupEnd();
-     return; */
+ 
     if (product) {
         if (product.reviews.find(x => x._userId.toString() === req.user._id)) {
             return res.status(400).send({

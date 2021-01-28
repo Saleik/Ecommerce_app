@@ -29,6 +29,7 @@ import { useEffect, useState } from 'react';
 import { ListProductsCategories } from './actions/productActions';
 import { MessageBox } from './components/MessageBox';
 import { LoadingBox } from './components/LoadingBox';
+import { MapScreen } from './screens/MapScreen';
 
 
 function App() {
@@ -152,6 +153,7 @@ function App() {
                 <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
                 <PrivateRoute path="/order/:id" component={OrderScreen} />
                 <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}/>
+                <PrivateRoute path="/map" component={MapScreen}/>
                 <Route exact path="/search" component={SearchScreen}/>
                 <Route exact path="/search/name/:name?" component={SearchScreen}/>
                 <Route exact path="/search/category/:category" component={SearchScreen}/>

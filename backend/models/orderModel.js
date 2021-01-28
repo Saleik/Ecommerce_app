@@ -44,7 +44,9 @@ const orderSchema = mongoose.Schema({
         country: {
             type: String,
             required: true
-        }
+        },
+        lat: Number,
+        lng: Number,
     },
     paymentMethod: {
         type: String,

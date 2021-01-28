@@ -5,6 +5,7 @@ import {
     createStore
 } from "redux"
 import thunk from "redux-thunk"
+
 import {
     productCreateReducer,
     productDetailsReducer,
@@ -14,6 +15,7 @@ import {
     productCategoryListReducer,
     ProductReviewCreateReducer
 } from './reducers/productReducers'
+
 import {
     cartReducer
 } from './reducers/cartReducers'
@@ -26,8 +28,10 @@ import {
     userRegisterReducer,
     userSigninReducer,
     userUpdateProfileReducer,
-    userTopSellersListReducer
+    userTopSellersListReducer,
+    userAddressMapReducer
 } from './reducers/userReducers'
+
 import {
     orderCreateReducer,
     orderDeleteReducer,
@@ -71,11 +75,10 @@ const reducer = combineReducers({
     userDelete: userDeleteReducer,
     userTopSellersList: userTopSellersListReducer,
     productCategoryList: productCategoryListReducer,
-    ProductReviewCreate: ProductReviewCreateReducer
-
-
-})
+    ProductReviewCreate: ProductReviewCreateReducer,
+    userAddressMap: userAddressMapReducer
+});
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)))
+export const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));
