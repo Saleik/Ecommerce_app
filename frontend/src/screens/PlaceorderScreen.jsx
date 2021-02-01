@@ -9,7 +9,6 @@ import { MessageBox } from '../components/MessageBox'
 
 export const PlaceOrderScreen = props => {
     const cart = useSelector(state => state.cart)
-    //FIXME:Redirect user when is disconnected to payment screen
     if (!cart.paymentMethod) {
         props.history.push('/payment')
     }
