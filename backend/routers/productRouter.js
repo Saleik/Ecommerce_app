@@ -14,6 +14,8 @@ import {
 export const productRouter = express.Router();
 
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
+    const pageSize = 3;
+    const page = parseInt(req.query.pageNumber)|| 1;
     const category = req.query.category || '';
     const name = req.query.name || '';
     const seller = req.query.seller || '';
@@ -64,7 +66,16 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
                     _id: -1
                 };
         }
-    }
+    };
+
+    const count = await Product.countDocuments({
+        ...sellerFilter,
+        ...nameFilter,
+        ...categoryFilter,
+        ...priceFilter,
+        ...ratingFilter
+    });
+
     const products = await Product.find({
             ...sellerFilter,
             ...nameFilter,
@@ -72,10 +83,12 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
             ...priceFilter,
             ...ratingFilter
         }).populate('seller', 'seller.name seller.logo')
-        .sort(sortOrder());
+        .sort(sortOrder())
+        .skip(pageSize * (page -1))
+        .limit(pageSize)
     res.status(200).send(
-        products
-    )
+       { products, page, pages: Math.ceil(count/pageSize)}
+    );
 }))
 
 productRouter.get('/categories', expressAsyncHandler(async (req, res) => {
@@ -97,10 +110,17 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
 
 productRouter.get('/seed', expressAsyncHandler(async (req, res) => {
     /*     await Product.remove({})*/
-    const createdProducts = await Product.insertMany(data.products)
-    res.send({
-        createdProducts
-    });
+    const seller = await User.findOne({ isSeller: true });
+    if (seller) {
+      const products = data.products.map((product) => ({
+        ...product,
+        seller: seller._id,
+      }));
+      const createdProducts = await Product.insertMany(products);
+      res.send({ createdProducts });
+    } else {
+      res.status(500).send({ message: 'No seller found. first run /api/users/seed' });
+    }
 }))
 
 productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {

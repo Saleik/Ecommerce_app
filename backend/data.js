@@ -3,9 +3,16 @@ import bcrypt from 'bcryptjs'
 export const data = {
   users: [{
       name: 'Kevin',
-      email: 'admin@admin.com',
+      email: 'kevin@admin.com',
       password: bcrypt.hashSync('1234', 8),
-      isAdmin: true
+      isAdmin: true,
+      isSeller: true,
+      seller:{
+        name:'Saleik Store',
+        logo:'/images/logo1.png',
+        rating: 4.5,
+        numReviews: 120
+      },
     },
     {
       name: 'John',

@@ -1,5 +1,8 @@
 import Axios from 'axios'
 import {
+    USER_REGISTER_REQUEST,
+    USER_REGISTER_SUCCESS,
+    USER_REGISTER_FAIL,
     USER_SIGNIN_REQUEST,
     USER_SIGNIN_SUCCESS,
     USER_SIGNIN_FAIL,
@@ -23,12 +26,6 @@ import {
     USER_UPDATE_FAIL,
     USER_UPDATE_SUCCESS,
 } from '../constants/userConstants'
-import {
-    USER_REGISTER_REQUEST,
-    USER_REGISTER_SUCCESS,
-    USER_REGISTER_FAIL
-} from '../constants/userConstants'
-
 export const signin = (email, password) => async (dispatch) => {
     dispatch({
         type: USER_SIGNIN_REQUEST,
@@ -105,26 +102,15 @@ export const register = (name, email, password) => async (dispatch) => {
     }
 }
 
-export const detailsUser = (userId) => async (dispatch, getState) => {
+export const detailsUser = (userId) => async (dispatch) => {
     dispatch({
         type: USER_DETAILS_REQUEST,
         payload: userId
     });
-
-    const {
-        userSignin: {
-            userInfo
-        }
-    } = getState();
-
     try {
         const {
             data
-        } = await Axios.get(`/api/users/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        });
+        } = await Axios.get(`/api/users/${userId}`,);
 
         dispatch({
             type: USER_DETAILS_SUCCESS,

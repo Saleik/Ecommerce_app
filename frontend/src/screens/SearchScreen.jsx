@@ -9,17 +9,18 @@ import { Rating } from '../components/Rating';
 import { prices, ratings } from '../utils';
 
 export const SearchScreen = props => {
-
     const {
         name = 'all',
         category = 'all',
         min = 0,
         max = 0,
         rating = 0,
-        order = 'newest'
+        order = 'newest',
+        pageNumber = 1
     } = useParams();
+
     const productList = useSelector(state => state.productList);
-    const { loading, error, products } = productList;
+    const { loading, error, products, pages, page } = productList;
 
     const productCategoryList = useSelector(state => state.productCategoryList);
     const { loading: loadingCategories, error: errorCategories, categories } = productCategoryList;
@@ -27,6 +28,7 @@ export const SearchScreen = props => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(listProducts({
+            pageNumber,
             name: name !== 'all' ? name : '',
             category: category !== 'all' ? category : '',
             min,
@@ -34,9 +36,10 @@ export const SearchScreen = props => {
             rating,
             order,
         }))
-    }, [dispatch, name, category, min, max, rating, order]);
+    }, [dispatch, name, category, min, max, rating, order, pageNumber]);
 
     const getFilterUrl = (filter) => {
+        const filterPage = filter.page || pageNumber;
         const filterCategory = filter.category || category;
         const filterName = filter.name || name;
         const filterRating = filter.rating || rating;
@@ -44,7 +47,7 @@ export const SearchScreen = props => {
         const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
         const filterMax = filter.max || max;
 
-        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}`;
+        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
     }
     return (
         <div>
@@ -117,6 +120,13 @@ export const SearchScreen = props => {
                                     {products.length === 0 && <MessageBox> No Product Found </MessageBox>}
                                     <div className="row center ">
                                         {products.map(p => <Product key={p._id} product={p} />)}
+                                    </div>
+                                    <div className="row center pagination">
+                                        {
+                                            [...Array(pages).keys()].map(x => (
+                                                <Link className={x + 1 === page ? 'active' : ''} key={x + 1} to={getFilterUrl({ page: x + 1 })}>{x + 1}</Link>
+                                            ))
+                                        }
                                     </div>
                                 </>
                             )}

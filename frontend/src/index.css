@@ -422,6 +422,9 @@ img.large {
 .price-filter a, .department-filter a{
   color: blue;
 }
+.price-filter a:hover, .department-filter a:hover{
+  color: #f08000;
+}
 /* Map*/
 .full-container{
   margin: -1rem;
@@ -446,4 +449,19 @@ img.large {
 .map-input-box button{
   border-radius: 0 1rem 1rem 0;
   border-right: 0;
+}
+
+/* Pagination */
+.pagination a{
+  padding: 1rem;
+  margin: .5rem;
+  border-radius: .5rem;
+  border: .1rem #a4a4a4 solid;
+  font-size: 1.6rem;
+  font-family: Arial,
+    Helvetica,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #000;
 }

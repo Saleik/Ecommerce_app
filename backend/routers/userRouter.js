@@ -81,7 +81,7 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
     });
 }));
 
-userRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
+userRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
@@ -146,8 +146,8 @@ userRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => 
     if (user) {
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
-        user.isAdmin = req.body.isAdmin;
-        user.isSeller = req.body.isSeller;
+        user.isAdmin = Boolean(req.body.isAdmin);
+        user.isSeller = Boolean(req.body.isSeller);
 
         const userUpdated = await user.save();
 
