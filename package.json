@@ -5,9 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
-    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cd frontend && yarn install && yarn run build",
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +33,6 @@
   },
   "engines":{
     "node":"12.4.0", 
-    "npm":"6.14.8"
+    "yarn":"1.22.10"
   }
 }
