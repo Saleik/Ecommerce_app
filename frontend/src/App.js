@@ -9,7 +9,6 @@ import { SigninScreen } from './screens/SigninScreen';
 import {RegisterScreen} from './screens/RegisterScreen'
 import { ShippingAddressScreen } from './screens/ShippingAddressScreen';
 import { PaymentMethodScreen } from './screens/PaymentMethodScreen';
-import { PlaceOrderScreen } from './screens/PlaceOrderScreen';
 import { OrderScreen } from './screens/OrderScreen';
 import { OrderHistoryScreen } from './screens/OrderHistoryScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
@@ -30,6 +29,7 @@ import { ListProductsCategories } from './actions/productActions';
 import { MessageBox } from './components/MessageBox';
 import { LoadingBox } from './components/LoadingBox';
 import { MapScreen } from './screens/MapScreen';
+import { PlaceOrderScreen } from './screens/PlaceOrderScreen';
 
 
 function App() {
