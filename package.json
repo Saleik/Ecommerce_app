@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && yarn install && yarn run build",
+    "build": "cd frontend && npm install && npm run build",
     "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
   },
   "repository": {
@@ -33,6 +33,6 @@
   },
   "engines":{
     "node":"12.4.0", 
-    "yarn":"1.22.10"
+    "yarn":"6.9.0"
   }
 }
