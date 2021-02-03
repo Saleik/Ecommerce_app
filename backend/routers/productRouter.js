@@ -110,17 +110,17 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
 
 productRouter.get('/seed', expressAsyncHandler(async (req, res) => {
     /*     await Product.remove({})*/
-    /* const seller = await User.findOne({ isSeller: true });
+     const seller = await User.findOne({ isSeller: true });
     if (seller) {
       const products = data.products.map((product) => ({
         ...product,
         seller: seller._id,
-      })); */
-      const createdProducts = await Product.insertMany(products);
+      })); 
+      const createdProducts = await Product.insertMany(data.products);
       res.send({ createdProducts });
-    /* } else {
+    } else {
       res.status(500).send({ message: 'No seller found. first run /api/users/seed' });
-    } */
+    }
 }))
 
 productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
