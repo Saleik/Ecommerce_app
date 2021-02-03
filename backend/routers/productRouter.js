@@ -5,7 +5,10 @@ import {
 } from '../data.js'
 import {
     Product
-} from '../models/productModel.js';
+} from '../models/productModel.js'
+import {
+    User
+} from '../models/userModel.js'
 import {
     isAuth,
     isSellerOrAdmin
@@ -15,7 +18,7 @@ export const productRouter = express.Router();
 
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
     const pageSize = 3;
-    const page = parseInt(req.query.pageNumber)|| 1;
+    const page = parseInt(req.query.pageNumber) || 1;
     const category = req.query.category || '';
     const name = req.query.name || '';
     const seller = req.query.seller || '';
@@ -84,12 +87,36 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
             ...ratingFilter
         }).populate('seller', 'seller.name seller.logo')
         .sort(sortOrder())
-        .skip(pageSize * (page -1))
+        .skip(pageSize * (page - 1))
         .limit(pageSize)
-    res.status(200).send(
-       { products, page, pages: Math.ceil(count/pageSize)}
-    );
-}))
+    res.status(200).send({
+        products,
+        page,
+        pages: Math.ceil(count / pageSize)
+    });
+}));
+
+productRouter.get('/seed', expressAsyncHandler(async (req, res) => {
+    /*     await Product.remove({})*/
+    const seller = await User.findOne({
+        isSeller: true
+    })
+
+    if (seller) {
+        const products = data.products.map((product) => ({
+            ...product,
+            seller: seller._id,
+        }));
+        const createdProducts = await Product.insertMany(products);
+        res.send({
+            createdProducts
+        });
+    } else {
+        res.status(500).send({
+            message: 'No seller found. first run /api/users/seed'
+        });
+    }
+}));
 
 productRouter.get('/categories', expressAsyncHandler(async (req, res) => {
     const categories = await Product.find().distinct('category');
@@ -103,25 +130,10 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     } else {
         res.status(404).send({
             message: "Product not Found"
-        })
+        });
     }
 
-}))
-
-productRouter.get('/seed', expressAsyncHandler(async (req, res) => {
-    /*     await Product.remove({})*/
-     const seller = await User.findOne({ isSeller: true });
-    if (seller) {
-      const products = data.products.map((product) => ({
-        ...product,
-        seller: seller._id,
-      })); 
-      const createdProducts = await Product.insertMany(data.products);
-      res.send({ createdProducts });
-    } else {
-      res.status(500).send({ message: 'No seller found. first run /api/users/seed' });
-    }
-}))
+}));
 
 productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
     const product = new Product({
@@ -143,7 +155,7 @@ productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req,
         message: 'Product Created',
         product: createdProduct
     })
-}))
+}));
 
 productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
@@ -186,12 +198,12 @@ productRouter.delete('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async 
             message: 'Product Not Found'
         })
     }
-}))
+}));
 
 productRouter.post('/:id/reviews', isAuth, expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
- 
+
     if (product) {
         if (product.reviews.find(x => x._userId.toString() === req.user._id)) {
             return res.status(400).send({
@@ -219,4 +231,4 @@ productRouter.post('/:id/reviews', isAuth, expressAsyncHandler(async (req, res) 
             message: 'Product Not Found'
         });
     }
-}))
+}));

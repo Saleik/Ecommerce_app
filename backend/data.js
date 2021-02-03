@@ -12,8 +12,8 @@ export const data = {
         logo: '/img/spooky.jpg',
         description: 'Best Seller',
         rating: 4.5,
-        numReviews: 120,
-      },
+        numReviews: 120
+      }
     },
     {
       name: 'John',
@@ -24,14 +24,14 @@ export const data = {
     {
       name: "Desiree",
       email: "desiree@user.com",
-      isAdmin: false,
       password: bcrypt.hashSync('1234Desiree', 8),
+      isAdmin: false
     },
     {
       name: "Sosa",
       email: "sosa@user.com",
       isAdmin: false,
-      password: bcrypt.hashSync('1234Sosa', 8),
+      password: bcrypt.hashSync('1234Sosa', 8)
     }
   ],
   products: [{
@@ -43,7 +43,7 @@ export const data = {
       brand: "Meadrine",
       rating: 0,
       numReviews: 0,
-      description: "High Quality Product",
+      description: "High Quality Product"
     },
     {
       name: "Jules Red Shirt",
@@ -54,7 +54,7 @@ export const data = {
       brand: "Jules",
       rating: 0,
       numReviews: 0,
-      description: "High Quality Product",
+      description: "High Quality Product"
     },
     {
       name: "Celio Shirt",
@@ -65,7 +65,7 @@ export const data = {
       brand: "Celio",
       rating: 0,
       numReviews: 0,
-      description: "High Quality Product",
+      description: "High Quality Product"
     },
     {
       name: "Gap Slim Pants Chino",
@@ -76,7 +76,7 @@ export const data = {
       brand: "Gap",
       rating: 0,
       numReviews: 0,
-      description: "High quality product",
+      description: "High quality product"
     },
     {
       name: "Bonobo Slim Pants Chino",
@@ -87,7 +87,7 @@ export const data = {
       brand: "Bonobo",
       rating: 0,
       numReviews: 0,
-      description: "High Quality Product",
+      description: "High Quality Product"
     },
     {
       name: "Eden Park Blue Shirt ",
@@ -98,7 +98,7 @@ export const data = {
       countInStock: 33,
       rating: 0,
       numReviews: 0,
-      description: "Quality brand",
+      description: "Quality brand"
     },
     {
       name: "Levi's Pants",
@@ -109,7 +109,7 @@ export const data = {
       countInStock: 18,
       rating: 0,
       numReviews: 0,
-      description: "High Quality Product",
+      description: "High Quality Product"
     },
     {
       name: "Gapo Red Shirt",
@@ -120,7 +120,7 @@ export const data = {
       countInStock: 53,
       rating: 0,
       numReviews: 0,
-      description: "Eco Quality Shirt",
+      description: "Eco Quality Shirt"
     },
     {
       name: "Puma Sneakers",
@@ -134,4 +134,4 @@ export const data = {
       description: "Quality Sneakers"
     }
   ]
-}
+};
