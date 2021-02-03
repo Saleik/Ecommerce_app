@@ -100,7 +100,7 @@ export const ProductListScreen = props => {
                     <div className="row center pagination">
                         {
                             [...Array(pages).keys()].map(x => (
-                                <Link className={x + 1 === page ? 'active' : ''} key={x + 1} to={`/productlist/pageNumber/${x +1}`}>{x + 1}</Link>
+                                <Link className={x + 1 === page ? 'active' : ''} key={x + 1} to={`/pageNumber/${x +1}`}>{x + 1}</Link>
                             ))
                         }
                     </div>
