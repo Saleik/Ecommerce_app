@@ -46,7 +46,7 @@ export const ProfileScreen = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         if (password !== confirmPassword) {
-            alert('Password and Confirm Password doesn\'t match')
+            alert('Password and Confirm Password doesn\'t match');
         } else {
             dispatch(updateUserProfile({ userId: user._id, name, email, password, sellerName, sellerLogo, sellerDescription }))
         }
@@ -109,11 +109,11 @@ export const ProfileScreen = () => {
                                     <h2>Seller</h2>
                                     <div>
                                         <label htmlFor="sellerName">Seller name</label>
-                                        <input type="text" name="sellerName" id="sellerName" placeholder="Enter Seller Name" defaultValue={sellerName} onChange={e => setSellerName(e.target.value)} />
+                                        <input type="text" name="sellerName" id="sellerName" placeholder="Enter Seller Name" defaultValue={sellerName} onChange={e => setSellerName(e.target.value)} required />
                                     </div>
                                     <div>
                                         <label htmlFor="sellerLogo">Seller Logo</label>
-                                        <input type="text" id="sellerLogo" name="sellerLogo" placeholder="Enter Seller Logo" defaultValue={sellerLogo} onChange={e => setSellerLogo(e.target.value)} />
+                                        <input type="text" id="sellerLogo" name="sellerLogo" placeholder="Enter Seller Logo" defaultValue={sellerLogo} onChange={e => setSellerLogo(e.target.value)} required />
                                     </div>
                                     <div>
                                         <label htmlFor="logoFile">Logo file</label>
@@ -123,7 +123,7 @@ export const ProfileScreen = () => {
                                     </div>
                                     <div>
                                         <label htmlFor="sellerDescription">Seller Description</label>
-                                        <input type="text" id="sellerDescription" placeholder="Enter Seller Description" name="sellerDescription" defaultValue={sellerDescription} onChange={e => setSellerDescription(e.target.value)} />
+                                        <input type="text" id="sellerDescription" placeholder="Enter Seller Description" name="sellerDescription" defaultValue={sellerDescription} onChange={e => setSellerDescription(e.target.value)} required />
                                     </div>
                                 </>
                             )}

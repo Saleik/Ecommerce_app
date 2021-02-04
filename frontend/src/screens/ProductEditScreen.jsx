@@ -16,8 +16,8 @@ export const ProductEditScreen = props => {
     const [brand, setBrand] = useState('');
     const [description, setDescription] = useState('');
 
-    const userSignin = useSelector(state=>state.userSignin);
-    const {userInfo} = userSignin;
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo } = userSignin;
 
     const productDetails = useSelector(state => state.productDetails);
     const { loading, error, product } = productDetails;
@@ -28,7 +28,7 @@ export const ProductEditScreen = props => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (successUpdate) {
-            props.history.push(`/productlist${ userInfo.isSeller ? '/seller':''}`)
+            props.history.goBack();
         }
         if (!product || (product._id !== productId) || successUpdate) {
             dispatch({ type: PRODUCT_UPDATE_RESET })

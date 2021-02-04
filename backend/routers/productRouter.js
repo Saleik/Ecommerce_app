@@ -98,6 +98,7 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
 }));
 
 productRouter.get('/seed', expressAsyncHandler(async (req, res) => {
+
     const seller = await User.findOne({
         isSeller: true
     })
@@ -136,25 +137,35 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
 }));
 
 productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
-    const product = new Product({
-        name: 'sample name' + Date.now(),
-        seller: req.user._id,
-        image: '/img/p1.jpg',
-        price: 0,
-        category: 'sample category',
-        brand: 'sample brand',
-        countInStock: 0,
-        rating: 0,
-        numReviews: 0,
-        description: 'sample description',
-    })
 
-    const createdProduct = await product.save()
+    const user = await User.findById(req.user._id);
 
-    res.status(201).send({
-        message: 'Product Created',
-        product: createdProduct
-    })
+    if (user.seller.name && user.seller.logo && user.seller.description) {
+        const product = new Product({
+            name: 'sample name' + Date.now(),
+            seller: req.user._id,
+            image: '/img/p1.jpg',
+            price: 0,
+            category: 'sample category',
+            brand: 'sample brand',
+            countInStock: 0,
+            rating: 0,
+            numReviews: 0,
+            description: 'sample description',
+        });
+
+        const createdProduct = await product.save();
+
+        res.status(201).send({
+            message: 'Product Created',
+            product: createdProduct
+        });
+    } else {
+        res.status(405).send({
+            message: "Please register store info in User Profile before."
+        })
+    }
+
 }));
 
 productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
