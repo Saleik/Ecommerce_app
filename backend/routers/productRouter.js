@@ -46,6 +46,7 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
             $options: 'i'
         }
     } : {};
+
     const sellerFilter = seller ? {
         seller
     } : {};
@@ -97,7 +98,6 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
 }));
 
 productRouter.get('/seed', expressAsyncHandler(async (req, res) => {
-    /*     await Product.remove({})*/
     const seller = await User.findOne({
         isSeller: true
     })
@@ -128,7 +128,7 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     if (product) {
         res.status(200).send(product)
     } else {
-        res.status(404).send({
+        res.send({
             message: "Product not Found"
         });
     }
@@ -178,7 +178,7 @@ productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (re
             product: updatedProduct
         })
     } else {
-        res.status(404).send({
+        res.send({
             message: 'Product Not found'
         });
     }
@@ -194,7 +194,7 @@ productRouter.delete('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async 
             product: deletedProduct
         });
     } else {
-        res.status(404).send({
+        res.send({
             message: 'Product Not Found'
         })
     }
@@ -227,7 +227,7 @@ productRouter.post('/:id/reviews', isAuth, expressAsyncHandler(async (req, res) 
         });
 
     } else {
-        res.status(404).send({
+        res.send({
             message: 'Product Not Found'
         });
     }

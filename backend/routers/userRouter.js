@@ -87,7 +87,7 @@ userRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     if (user) {
         res.status(200).send(user)
     } else {
-        res.status(404).send({
+        res.send({
             message: 'User Not Found'
         });
     }
@@ -134,7 +134,7 @@ userRouter.delete('/:id', isAuth, expressAsyncHandler(async (req, res) => {
             user: userDeleted
         });
     } else {
-        res.status(404).send({
+        res.send({
             message: 'User Not Found.'
         });
     }
@@ -156,7 +156,7 @@ userRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => 
             user: userUpdated
         });
     } else {
-        res.status(404).send({
+        res.send({
             message: 'User Not Found.'
         });
     }

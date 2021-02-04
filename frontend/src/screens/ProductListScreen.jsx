@@ -9,6 +9,7 @@ import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from '../constants/product
 export const ProductListScreen = props => {
     const { pageNumber = 1 } = useParams();
     const sellerMode = props.match.path.indexOf('/seller') >= 0;
+
     const userSignin = useSelector(state => state.userSignin);
     const { userInfo } = userSignin;
 
@@ -100,7 +101,7 @@ export const ProductListScreen = props => {
                     <div className="row center pagination">
                         {
                             [...Array(pages).keys()].map(x => (
-                                <Link className={x + 1 === page ? 'active' : ''} key={x + 1} to={`/pageNumber/${x +1}`}>{x + 1}</Link>
+                                <Link className={x + 1 === page ? 'active' : ''} key={x + 1} to={`/productlist/${sellerMode ? 'seller/':''}pageNumber/${x + 1}`}>{x + 1}</Link>
                             ))
                         }
                     </div>

@@ -23,7 +23,7 @@ orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, re
     if (orders) {
         res.status(200).send(orders);
     } else {
-        res.status(404).send({
+        res.send({
             message: 'There is no Orders at this time.'
         });
     }
@@ -65,9 +65,9 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
 orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
-        res.send(order)
+        res.status(200).send(order)
     } else {
-        res.status(404).send({
+        res.send({
             message: 'Order Not Found'
         });
     }
@@ -91,7 +91,7 @@ orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
             order: updatedOrder
         });
     } else {
-        res.status(404).send({
+        res.send({
             message: 'Order not found'
         });
     }
@@ -108,7 +108,7 @@ orderRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res)
             order: deleteOrder
         });
     } else {
-        res.status(404).send({
+        res.send({
             message: 'Order Not found'
         });
     }
@@ -126,7 +126,7 @@ orderRouter.put('/:id/deliver', isAuth, isAdmin, expressAsyncHandler(async (req,
             order: updatedOrder
         })
     } else {
-        res.status(404).send({
+        res.send({
             message: 'Order not found'
         })
     }

@@ -107,9 +107,6 @@ function App() {
                             <Link to="#admin">Admin{' '}<i className="fa fa-caret-down"></i></Link>
                             <ul className="dropdown-content">
                                 <li>
-                                    <Link to="/">Dashboard</Link>
-                                </li>
-                                <li>
                                     <Link to="/productlist">Products</Link>
                                 </li>
                                 <li>
@@ -166,6 +163,7 @@ function App() {
                 <AdminRoute path="/users" component={UserListScreen}/>
                 <AdminRoute path="/users/:id/edit" component={UserEditScreen}/>
                 <SellerRoute path="/productlist/seller" component={ProductListScreen}/>
+                <SellerRoute path="/productlist/seller/pageNumber/:pageNumber" component={ProductListScreen}/>
                 <SellerRoute path="/orders/seller" component={OrderListScreen}/>
                 <Route exact path="/" component={HomeScreen}/>
             </main>
