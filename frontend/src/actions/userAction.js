@@ -110,7 +110,7 @@ export const detailsUser = (userId) => async (dispatch) => {
     try {
         const {
             data
-        } = await Axios.get(`/api/users/${userId}`,);
+        } = await Axios.get(`/api/users/${userId}`, );
 
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -160,6 +160,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             payload: data
         });
         localStorage.setItem('userInfo', JSON.stringify(data));
+        window.location.href = '/';
     } catch (error) {
 
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
@@ -195,7 +196,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
             type: USER_UPDATE_SUCCESS,
             payload: data
         });
-      
+
     } catch (error) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({
