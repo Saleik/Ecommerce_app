@@ -27,3 +27,5 @@ yarn-error.log*
 
 /uploads/*.jpg
 ecommerce_lab.code-workspace
+
+backend/data.js
